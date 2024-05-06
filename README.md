@@ -1,8 +1,9 @@
 ## 收敛线程池
-使用ASM将Android项目和SDK中的线程池统一Hook为统一的线程池
+使用ASM将Android项目和SDK中的线程池Hook为统一的线程池进行管理，降低内存使用
 
 ### 配置方式
 ```
+// 将Thread、Executors、ThreadPoolExecutor、ScheduledThreadPoolExecutor统一实现
 hookThread {
     enableHookThread = true
     hookThread = "com/cw/asm/unifiedthread/OptThread" // 统一Thread
