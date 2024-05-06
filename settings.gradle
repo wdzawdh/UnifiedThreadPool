@@ -1,2 +1,3 @@
 rootProject.name = "UnifiedThreadPool"
 include ':app'
+include ':testjar'

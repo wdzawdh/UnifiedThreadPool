@@ -63,7 +63,15 @@ class HookThreadPoolTransform(private val project: Project) : Transform() {
             jarInput.scopes,
             Format.JAR
         )
-        FileUtils.copyFile(jarInput.file, dest)
+        // FileUtils.copyFile(jarInput.file, dest)
+        val tmpDir = File("${project.buildDir}/tmp/${jarInput.name}")
+        tmpDir.mkdirs()
+        FileUtils.unzipJar(jarInput.file, tmpDir)
+        val classFiles = FileUtils.findAllClassFiles(tmpDir)
+        classFiles.forEach { classFile ->
+            transform(tmpDir, classFile)
+        }
+        FileUtils.zipJar(tmpDir, dest)
     }
 
     private fun processDirectoryInputs(
@@ -77,7 +85,7 @@ class HookThreadPoolTransform(private val project: Project) : Transform() {
             Format.DIRECTORY
         )
         val inputDir = directoryInput.file
-        FileUtils.listClasses(inputDir).forEach { inputFile ->
+        FileUtils.findAllClassFiles(inputDir).forEach { inputFile ->
             transform(inputDir, inputFile)
         }
         // 将修改过的字节码copy到dest，就可以实现编译期间干预字节码的目的了

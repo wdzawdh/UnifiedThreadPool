@@ -2,6 +2,7 @@ package com.cw.asm.unifiedthread
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.cw.asm.testjar.TestJarThread
 import java.util.concurrent.Executors
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.ScheduledThreadPoolExecutor
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         hookThread()
+        TestJarThread().hookThread()
     }
 
     /**
