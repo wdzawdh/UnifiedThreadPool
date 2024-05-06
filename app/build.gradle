@@ -1,0 +1,45 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.cw.asm.hookthread'
+}
+
+android {
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.cw.asm.unifiedthread"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+hookThread {
+    enableHookThread = true
+    hookThread = "com/cw/asm/unifiedthread/OptThread"
+    hookExecutors = "com/cw/asm/unifiedthread/ThreadUtil"
+    hookThreadPoolExecutor = "com/cw/asm/unifiedthread/OptThreadPool"
+    hookScheduledThreadPoolExecutor = "com/cw/asm/unifiedthread/OptScheduledThreadPool"
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'com.google.android.material:material:1.4.0'
+}
